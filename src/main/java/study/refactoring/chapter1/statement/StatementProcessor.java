@@ -24,13 +24,13 @@ public class StatementProcessor {
             volumeCredits += calculateVolumeCredits(performance);
 
             // 청구 내역 출력
-            result.append(String.format(" %s: $%,.2f", playFor(performance).name(), calculateAmount(performance) / 100))
+            result.append(String.format(" %s: ", playFor(performance).name()) + formatUSD(calculateAmount(performance)))
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
             totalAmount += calculateAmount(performance);
         }
 
-        result.append(String.format("총액: $%,.2f", totalAmount / 100)).append(System.lineSeparator());
+        result.append("총액: ").append(formatUSD(totalAmount)).append(System.lineSeparator());
         result.append("적립 포인트: ").append(volumeCredits).append("점").append(System.lineSeparator());
         return result.toString();
     }
@@ -67,5 +67,9 @@ public class StatementProcessor {
             default -> throw new IllegalStateException("알 수 없는 장르: " + playFor(performance).type());
         }
         return result;
+    }
+
+    private String formatUSD(double amount) {
+        return String.format("$%,.2f", amount / 100);
     }
 }
