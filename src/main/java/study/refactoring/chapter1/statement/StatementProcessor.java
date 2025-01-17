@@ -19,10 +19,7 @@ public class StatementProcessor {
         result.append("청구 내역 (고객명: ").append(invoice.customer()).append(")").append(System.lineSeparator());
 
         double totalAmount = 0;
-        int volumeCredits = 0;
         for (Performance performance : invoice.performances()) {
-            volumeCredits += calculateVolumeCredits(performance);
-
             // 청구 내역 출력
             result.append(String.format(" %s: ", playFor(performance).name()) + formatUSD(calculateAmount(performance)))
                     .append(" (")
@@ -30,9 +27,21 @@ public class StatementProcessor {
             totalAmount += calculateAmount(performance);
         }
 
-        result.append("총액: ").append(formatUSD(totalAmount)).append(System.lineSeparator());
-        result.append("적립 포인트: ").append(volumeCredits).append("점").append(System.lineSeparator());
+        result.append("총액: ")
+                .append(formatUSD(totalAmount))
+                .append(System.lineSeparator());
+        result.append("적립 포인트: ").append(calculateTotalVolumeCredits())
+                .append("점")
+                .append(System.lineSeparator());
         return result.toString();
+    }
+
+    private int calculateTotalVolumeCredits() {
+        int volumeCredits = 0;
+        for (Performance performance : invoice.performances()) {
+            volumeCredits += calculateVolumeCredits(performance);
+        }
+        return volumeCredits;
     }
 
     private int calculateVolumeCredits(final Performance performance) {
