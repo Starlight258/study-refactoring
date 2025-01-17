@@ -7,10 +7,10 @@ import study.refactoring.chapter1.play.Plays;
 // 명세서
 public class StatementProcessor {
 
-    private final study.refactoring.chapter1.statement.Invoice invoice;
+    private final Invoice invoice;
     private final Plays plays;
 
-    public StatementProcessor(final study.refactoring.chapter1.statement.Invoice invoice, final Plays plays) {
+    public StatementProcessor(final Invoice invoice, final Plays plays) {
         this.invoice = invoice;
         this.plays = plays;
     }
@@ -21,9 +21,7 @@ public class StatementProcessor {
 
         double totalAmount = 0;
         int volumeCredits = 0;
-        for (study.refactoring.chapter1.statement.Performance performance : invoice.performances()) {
-            double thisAmount = calculateAmount(performance);
-
+        for (Performance performance : invoice.performances()) {
             // 포인트 적립
             volumeCredits += Math.max(performance.audience() - 30, 0);
             // 희극 관객 5명마다 추가 포인트 제공
@@ -31,9 +29,10 @@ public class StatementProcessor {
                 volumeCredits += performance.audience() / 5;
             }
             // 청구 내역 출력
-            result.append(String.format(" %s: $%,.2f", playFor(performance).name(), thisAmount / 100)).append(" (")
+            result.append(String.format(" %s: $%,.2f", playFor(performance).name(), calculateAmount(performance) / 100))
+                    .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
-            totalAmount += thisAmount;
+            totalAmount += calculateAmount(performance);
         }
 
         result.append(String.format("총액: $%,.2f", totalAmount / 100)).append(System.lineSeparator());
