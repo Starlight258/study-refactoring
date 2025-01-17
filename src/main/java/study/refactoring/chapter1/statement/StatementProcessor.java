@@ -28,10 +28,8 @@ public class StatementProcessor {
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
-        double totalAmount = calculateTotalAmount();
-
         result.append("총액: ")
-                .append(formatUSD(totalAmount))
+                .append(formatUSD(calculateTotalAmount()))
                 .append(System.lineSeparator());
         result.append("적립 포인트: ").append(calculateTotalVolumeCredits())
                 .append("점")
