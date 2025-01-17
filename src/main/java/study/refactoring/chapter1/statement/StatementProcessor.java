@@ -22,17 +22,16 @@ public class StatementProcessor {
         double totalAmount = 0;
         int volumeCredits = 0;
         for (study.refactoring.chapter1.statement.Performance performance : invoice.performances()) {
-            Play play = plays.get(performance.playID());
-            double thisAmount = calculateAmount(performance, play);
+            double thisAmount = calculateAmount(performance);
 
             // 포인트 적립
             volumeCredits += Math.max(performance.audience() - 30, 0);
             // 희극 관객 5명마다 추가 포인트 제공
-            if (play.type() == PlayType.comedy) {
+            if (playFor(performance).type() == PlayType.comedy) {
                 volumeCredits += performance.audience() / 5;
             }
             // 청구 내역 출력
-            result.append(String.format(" %s: $%,.2f", play.name(), thisAmount / 100)).append(" (")
+            result.append(String.format(" %s: $%,.2f", playFor(performance).name(), thisAmount / 100)).append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
             totalAmount += thisAmount;
         }
@@ -42,24 +41,28 @@ public class StatementProcessor {
         return result.toString();
     }
 
-    private double calculateAmount(final Performance performance, final Play play) {
-        double thisAmount;
-        switch (play.type()) {
+    private Play playFor(final Performance performance) {
+        return plays.get(performance.playID());
+    }
+
+    private double calculateAmount(final Performance performance) {
+        double result;
+        switch (playFor(performance).type()) {
             case PlayType.tragedy -> {
-                thisAmount = 40_000;
+                result = 40_000;
                 if (performance.audience() > 30) {
-                    thisAmount += 1_000 * (performance.audience() - 30);
+                    result += 1_000 * (performance.audience() - 30);
                 }
             }
             case PlayType.comedy -> {
-                thisAmount = 30_000;
+                result = 30_000;
                 if (performance.audience() > 20) {
-                    thisAmount += 10_000 + 500 * (performance.audience() - 20);
+                    result += 10_000 + 500 * (performance.audience() - 20);
                 }
-                thisAmount += 300 * performance.audience();
+                result += 300 * performance.audience();
             }
-            default -> throw new IllegalStateException("알 수 없는 장르: " + play.type());
+            default -> throw new IllegalStateException("알 수 없는 장르: " + playFor(performance).type());
         }
-        return thisAmount;
+        return result;
     }
 }
