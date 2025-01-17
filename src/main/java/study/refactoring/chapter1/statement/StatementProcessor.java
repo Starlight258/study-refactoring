@@ -38,19 +38,19 @@ public class StatementProcessor {
     }
 
     private double calculateTotalAmount() {
-        double totalAmount = 0;
+        double result = 0;
         for (Performance performance : invoice.performances()) {
-            totalAmount += calculateAmount(performance);
+            result += calculateAmount(performance);
         }
-        return totalAmount;
+        return result;
     }
 
     private int calculateTotalVolumeCredits() {
-        int volumeCredits = 0;
+        int result = 0;
         for (Performance performance : invoice.performances()) {
-            volumeCredits += calculateVolumeCredits(performance);
+            result += calculateVolumeCredits(performance);
         }
-        return volumeCredits;
+        return result;
     }
 
     private int calculateVolumeCredits(final Performance performance) {
