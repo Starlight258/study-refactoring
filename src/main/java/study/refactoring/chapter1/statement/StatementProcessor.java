@@ -28,10 +28,7 @@ public class StatementProcessor {
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
-        double totalAmount = 0;
-        for (Performance performance : invoice.performances()) {
-            totalAmount += calculateAmount(performance);
-        }
+        double totalAmount = calculateTotalAmount();
 
         result.append("총액: ")
                 .append(formatUSD(totalAmount))
@@ -40,6 +37,14 @@ public class StatementProcessor {
                 .append("점")
                 .append(System.lineSeparator());
         return result.toString();
+    }
+
+    private double calculateTotalAmount() {
+        double totalAmount = 0;
+        for (Performance performance : invoice.performances()) {
+            totalAmount += calculateAmount(performance);
+        }
+        return totalAmount;
     }
 
     private int calculateTotalVolumeCredits() {
