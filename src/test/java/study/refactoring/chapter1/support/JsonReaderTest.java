@@ -1,6 +1,7 @@
 package study.refactoring.chapter1.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static study.refactoring.chapter1.play.PlayType.tragedy;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ import study.refactoring.chapter1.statement.Invoice;
 class JsonReaderTest {
 
     @Autowired
-    private study.refactoring.chapter1.support.JsonReader jsonReader;
+    private JsonReader jsonReader;
 
 
     @Test
@@ -26,8 +27,10 @@ class JsonReaderTest {
 
         // then
         Invoice invoice = invoices.getFirst();
-        assertThat(invoice.customer()).isEqualTo("BigCo");
-        assertThat(invoice.performances()).hasSize(3);
+        assertAll(
+                () -> assertThat(invoice.customer()).isEqualTo("BigCo"),
+                () -> assertThat(invoice.performances()).hasSize(3)
+        );
     }
 
     @Test
@@ -37,7 +40,9 @@ class JsonReaderTest {
 
         // then
         Play play = plays.get("hamlet");
-        assertThat(play.name()).isEqualTo("Hamlet");
-        assertThat(play.type()).isEqualTo(tragedy);
+        assertAll(
+                () -> assertThat(play.name()).isEqualTo("Hamlet"),
+                () -> assertThat(play.type()).isEqualTo(tragedy)
+        );
     }
 }

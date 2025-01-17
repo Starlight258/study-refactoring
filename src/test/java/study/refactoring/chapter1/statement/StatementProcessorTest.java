@@ -19,9 +19,9 @@ class StatementProcessorTest {
     @Test
     void createStatement() throws IOException {
         // given
-        List<study.refactoring.chapter1.statement.Invoice> invoices = jsonReader.readInvoices();
+        List<Invoice> invoices = jsonReader.readInvoices();
         Plays plays = jsonReader.readPlays();
-        study.refactoring.chapter1.statement.StatementProcessor statementProcessor = new study.refactoring.chapter1.statement.StatementProcessor(invoices.getFirst(), plays);
+        StatementProcessor statementProcessor = new StatementProcessor(invoices.getFirst(), plays);
 
         // when
         String statement = statementProcessor.createStatement();
