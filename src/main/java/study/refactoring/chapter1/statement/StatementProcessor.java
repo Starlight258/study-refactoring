@@ -28,6 +28,8 @@ public class StatementProcessor {
                     .append(formatUSD(calculateAmount(performance)))
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
+        }
+        for (Performance performance : invoice.performances()) {
             totalAmount += calculateAmount(performance);
         }
 
