@@ -21,7 +21,6 @@ public class StatementProcessor {
                 append(")")
                 .append(System.lineSeparator());
 
-        double totalAmount = 0;
         for (Performance performance : invoice.performances()) {
             // 청구 내역 출력
             result.append(String.format(" %s: ", playFor(performance).name()))
@@ -29,6 +28,7 @@ public class StatementProcessor {
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
+        double totalAmount = 0;
         for (Performance performance : invoice.performances()) {
             totalAmount += calculateAmount(performance);
         }
