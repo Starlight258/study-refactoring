@@ -5,16 +5,14 @@ import study.refactoring.chapter1.play.Plays;
 
 public class StatementProcessor {
 
-    private final Invoice invoice;
-    private final Plays plays;
+    private final StatementDataFactory statementDataFactory;
 
-    public StatementProcessor(final Invoice invoice, final Plays plays) {
-        this.invoice = invoice;
-        this.plays = plays;
+    public StatementProcessor(final Plays plays) {
+        this.statementDataFactory = new StatementDataFactory(plays);
     }
 
-    public String createStatement() {
-        StatementData statementData = StatementData.of(invoice, plays);
+    public String createStatement(final Invoice invoice) {
+        StatementData statementData = statementDataFactory.createFrom(invoice);
         return renderPlainText(statementData);
     }
 

@@ -21,10 +21,10 @@ class StatementProcessorTest {
         // given
         List<Invoice> invoices = jsonReader.readInvoices();
         Plays plays = jsonReader.readPlays();
-        StatementProcessor statementProcessor = new StatementProcessor(invoices.getFirst(), plays);
+        StatementProcessor statementProcessor = new StatementProcessor(plays);
 
         // when
-        String statement = statementProcessor.createStatement();
+        String statement = statementProcessor.createStatement(invoices.getFirst());
 
         // then
         assertThat(statement).contains("""
