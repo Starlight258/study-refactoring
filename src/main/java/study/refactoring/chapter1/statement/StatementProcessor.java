@@ -30,28 +30,12 @@ public class StatementProcessor {
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
         result.append("총액: ")
-                .append(formatUSD(calculateTotalAmount(statementData)))
+                .append(formatUSD(statementData.totalAmount()))
                 .append(System.lineSeparator());
-        result.append("적립 포인트: ").append(calculateTotalVolumeCredits(statementData))
+        result.append("적립 포인트: ").append(statementData.totalVolumeCredits())
                 .append("점")
                 .append(System.lineSeparator());
         return result.toString();
-    }
-
-    private double calculateTotalAmount(final StatementData statementData) {
-        double result = 0;
-        for (EnrichedPerformance performance : statementData.performances()) {
-            result += performance.amount();
-        }
-        return result;
-    }
-
-    private int calculateTotalVolumeCredits(final StatementData statementData) {
-        int result = 0;
-        for (EnrichedPerformance performance : statementData.performances()) {
-            result += performance.volumeCredits();
-        }
-        return result;
     }
 
     private String formatUSD(double amount) {

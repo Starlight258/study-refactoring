@@ -14,7 +14,9 @@ public class StatementDataFactory {
     }
 
     public StatementData createFrom(final Invoice invoice) {
-        return new StatementData(invoice.customer(), createFrom(invoice.performances()));
+        List<EnrichedPerformance> enrichedPerformances = createFrom(invoice.performances());
+        return new StatementData(invoice.customer(), enrichedPerformances,
+                calculateTotalAmount(enrichedPerformances), calculateTotalVolumeCredits(enrichedPerformances));
     }
 
     private List<EnrichedPerformance> createFrom(final List<Performance> performances) {
@@ -62,6 +64,22 @@ public class StatementDataFactory {
         // 희극 관객 5명마다 추가 포인트 제공
         if (play.type() == PlayType.comedy) {
             result += performance.audience() / 5;
+        }
+        return result;
+    }
+
+    private double calculateTotalAmount(final List<EnrichedPerformance> performances) {
+        double result = 0;
+        for (EnrichedPerformance performance : performances) {
+            result += performance.amount();
+        }
+        return result;
+    }
+
+    private int calculateTotalVolumeCredits(final List<EnrichedPerformance> performances) {
+        int result = 0;
+        for (EnrichedPerformance performance : performances) {
+            result += performance.volumeCredits();
         }
         return result;
     }
