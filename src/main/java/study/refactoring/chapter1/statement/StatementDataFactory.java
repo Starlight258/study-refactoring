@@ -69,18 +69,14 @@ public class StatementDataFactory {
     }
 
     private double calculateTotalAmount(final List<EnrichedPerformance> performances) {
-        double result = 0;
-        for (EnrichedPerformance performance : performances) {
-            result += performance.amount();
-        }
-        return result;
+        return performances.stream()
+                .mapToDouble(EnrichedPerformance::amount)
+                .sum();
     }
 
     private int calculateTotalVolumeCredits(final List<EnrichedPerformance> performances) {
-        int result = 0;
-        for (EnrichedPerformance performance : performances) {
-            result += performance.volumeCredits();
-        }
-        return result;
+        return performances.stream()
+                .mapToInt(EnrichedPerformance::volumeCredits)
+                .sum();
     }
 }
