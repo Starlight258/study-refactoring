@@ -9,10 +9,16 @@ public record EnrichedPerformance(String playID, int audience, Play play, double
 
     public static List<EnrichedPerformance> createFrom(final List<Performance> performances, final Plays plays) {
         return performances.stream()
-                .map(performance -> new EnrichedPerformance(
-                        performance.playID(), performance.audience(), playFor(performance, plays),
-                        calculateAmount(performance, playFor(performance, plays))))
+                .map(performance -> createFrom(performance, plays))
                 .toList();
+    }
+
+    private static EnrichedPerformance createFrom(final Performance performance, final Plays plays) {
+        Play play = playFor(performance, plays);
+        double amount = calculateAmount(performance, play);
+
+        return new EnrichedPerformance(performance.playID(), performance.audience(), play,
+                amount);
     }
 
     private static Play playFor(final Performance performance, final Plays plays) {
