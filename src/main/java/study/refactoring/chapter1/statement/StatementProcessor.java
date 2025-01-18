@@ -1,6 +1,5 @@
 package study.refactoring.chapter1.statement;
 
-import study.refactoring.chapter1.play.PlayType;
 import study.refactoring.chapter1.play.Plays;
 
 public class StatementProcessor {
@@ -50,16 +49,7 @@ public class StatementProcessor {
     private int calculateTotalVolumeCredits(final StatementData statementData) {
         int result = 0;
         for (EnrichedPerformance performance : statementData.performances()) {
-            result += calculateVolumeCredits(performance);
-        }
-        return result;
-    }
-
-    private int calculateVolumeCredits(final EnrichedPerformance performance) {
-        int result = Math.max(performance.audience() - 30, 0);
-        // 희극 관객 5명마다 추가 포인트 제공
-        if (performance.play().type() == PlayType.comedy) {
-            result += performance.audience() / 5;
+            result += performance.volumeCredits();
         }
         return result;
     }

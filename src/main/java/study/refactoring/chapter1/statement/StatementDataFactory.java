@@ -26,9 +26,10 @@ public class StatementDataFactory {
     private EnrichedPerformance createFrom(final Performance performance) {
         Play play = playFor(performance);
         double amount = calculateAmount(performance, play);
+        int volumeCredits = calculateVolumeCredits(performance, play);
 
         return new EnrichedPerformance(performance.playID(), performance.audience(), play,
-                amount);
+                amount, volumeCredits);
     }
 
     private Play playFor(final Performance performance) {
@@ -52,6 +53,15 @@ public class StatementDataFactory {
                 result += 300 * performance.audience();
             }
             default -> throw new IllegalStateException("알 수 없는 장르: " + play.type());
+        }
+        return result;
+    }
+
+    private int calculateVolumeCredits(final Performance performance, final Play play) {
+        int result = Math.max(performance.audience() - 30, 0);
+        // 희극 관객 5명마다 추가 포인트 제공
+        if (play.type() == PlayType.comedy) {
+            result += performance.audience() / 5;
         }
         return result;
     }
