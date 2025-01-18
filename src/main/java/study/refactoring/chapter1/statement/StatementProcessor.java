@@ -11,8 +11,7 @@ public class StatementProcessor {
     }
 
     public String createStatement(final Invoice invoice) {
-        StatementData statementData = statementDataFactory.createFrom(invoice);
-        return renderPlainText(statementData);
+        return renderPlainText(statementDataFactory.createFrom(invoice));
     }
 
     private String renderPlainText(final StatementData statementData) {
