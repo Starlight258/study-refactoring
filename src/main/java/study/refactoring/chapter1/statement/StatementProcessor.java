@@ -15,17 +15,18 @@ public class StatementProcessor {
     }
 
     public String createStatement() {
-        return renderPlainText();
+        StatementData statementData = StatementData.of(invoice);
+        return renderPlainText(statementData);
     }
 
-    private String renderPlainText() {
+    private String renderPlainText(final StatementData statementData) {
         StringBuilder result = new StringBuilder();
         result.append("청구 내역 (고객명: ")
-                .append(invoice.customer()).
+                .append(statementData.customer()).
                 append(")")
                 .append(System.lineSeparator());
 
-        for (Performance performance : invoice.performances()) {
+        for (Performance performance : statementData.performances()) {
             // 청구 내역 출력
             result.append(String.format(" %s: ", playFor(performance).name()))
                     .append(formatUSD(calculateAmount(performance)))
