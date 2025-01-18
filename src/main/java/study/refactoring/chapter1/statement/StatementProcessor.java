@@ -28,7 +28,7 @@ public class StatementProcessor {
         for (EnrichedPerformance performance : statementData.performances()) {
             // 청구 내역 출력
             result.append(String.format(" %s: ", performance.play().name()))
-                    .append(formatUSD(calculateAmount(performance)))
+                    .append(formatUSD(performance.amount()))
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
@@ -44,7 +44,7 @@ public class StatementProcessor {
     private double calculateTotalAmount(final StatementData statementData) {
         double result = 0;
         for (EnrichedPerformance performance : statementData.performances()) {
-            result += calculateAmount(performance);
+            result += performance.amount();
         }
         return result;
     }
@@ -62,27 +62,6 @@ public class StatementProcessor {
         // 희극 관객 5명마다 추가 포인트 제공
         if (performance.play().type() == PlayType.comedy) {
             result += performance.audience() / 5;
-        }
-        return result;
-    }
-
-    private double calculateAmount(final EnrichedPerformance performance) {
-        double result;
-        switch (performance.play().type()) {
-            case PlayType.tragedy -> {
-                result = 40_000;
-                if (performance.audience() > 30) {
-                    result += 1_000 * (performance.audience() - 30);
-                }
-            }
-            case PlayType.comedy -> {
-                result = 30_000;
-                if (performance.audience() > 20) {
-                    result += 10_000 + 500 * (performance.audience() - 20);
-                }
-                result += 300 * performance.audience();
-            }
-            default -> throw new IllegalStateException("알 수 없는 장르: " + performance.play().type());
         }
         return result;
     }
