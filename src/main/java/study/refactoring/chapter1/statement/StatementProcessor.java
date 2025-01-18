@@ -1,6 +1,5 @@
 package study.refactoring.chapter1.statement;
 
-import study.refactoring.chapter1.play.Play;
 import study.refactoring.chapter1.play.PlayType;
 import study.refactoring.chapter1.play.Plays;
 
@@ -15,7 +14,7 @@ public class StatementProcessor {
     }
 
     public String createStatement() {
-        StatementData statementData = StatementData.of(invoice);
+        StatementData statementData = StatementData.of(invoice, plays);
         return renderPlainText(statementData);
     }
 
@@ -26,54 +25,50 @@ public class StatementProcessor {
                 append(")")
                 .append(System.lineSeparator());
 
-        for (Performance performance : statementData.performances()) {
+        for (EnrichedPerformance performance : statementData.performances()) {
             // 청구 내역 출력
-            result.append(String.format(" %s: ", playFor(performance).name()))
+            result.append(String.format(" %s: ", performance.play().name()))
                     .append(formatUSD(calculateAmount(performance)))
                     .append(" (")
                     .append(performance.audience()).append("석)").append(System.lineSeparator());
         }
         result.append("총액: ")
-                .append(formatUSD(calculateTotalAmount()))
+                .append(formatUSD(calculateTotalAmount(statementData)))
                 .append(System.lineSeparator());
-        result.append("적립 포인트: ").append(calculateTotalVolumeCredits())
+        result.append("적립 포인트: ").append(calculateTotalVolumeCredits(statementData))
                 .append("점")
                 .append(System.lineSeparator());
         return result.toString();
     }
 
-    private double calculateTotalAmount() {
+    private double calculateTotalAmount(final StatementData statementData) {
         double result = 0;
-        for (Performance performance : invoice.performances()) {
+        for (EnrichedPerformance performance : statementData.performances()) {
             result += calculateAmount(performance);
         }
         return result;
     }
 
-    private int calculateTotalVolumeCredits() {
+    private int calculateTotalVolumeCredits(final StatementData statementData) {
         int result = 0;
-        for (Performance performance : invoice.performances()) {
+        for (EnrichedPerformance performance : statementData.performances()) {
             result += calculateVolumeCredits(performance);
         }
         return result;
     }
 
-    private int calculateVolumeCredits(final Performance performance) {
+    private int calculateVolumeCredits(final EnrichedPerformance performance) {
         int result = Math.max(performance.audience() - 30, 0);
         // 희극 관객 5명마다 추가 포인트 제공
-        if (playFor(performance).type() == PlayType.comedy) {
+        if (performance.play().type() == PlayType.comedy) {
             result += performance.audience() / 5;
         }
         return result;
     }
 
-    private Play playFor(final Performance performance) {
-        return plays.get(performance.playID());
-    }
-
-    private double calculateAmount(final Performance performance) {
+    private double calculateAmount(final EnrichedPerformance performance) {
         double result;
-        switch (playFor(performance).type()) {
+        switch (performance.play().type()) {
             case PlayType.tragedy -> {
                 result = 40_000;
                 if (performance.audience() > 30) {
@@ -87,7 +82,7 @@ public class StatementProcessor {
                 }
                 result += 300 * performance.audience();
             }
-            default -> throw new IllegalStateException("알 수 없는 장르: " + playFor(performance).type());
+            default -> throw new IllegalStateException("알 수 없는 장르: " + performance.play().type());
         }
         return result;
     }
