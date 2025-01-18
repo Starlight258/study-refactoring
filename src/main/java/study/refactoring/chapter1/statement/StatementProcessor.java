@@ -15,6 +15,10 @@ public class StatementProcessor {
     }
 
     public String createStatement() {
+        return renderPlainText();
+    }
+
+    private String renderPlainText() {
         StringBuilder result = new StringBuilder();
         result.append("청구 내역 (고객명: ")
                 .append(invoice.customer()).
