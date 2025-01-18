@@ -40,4 +40,21 @@ public class StatementProcessor {
     private String formatUSD(double amount) {
         return String.format("$%,.2f", amount / 100);
     }
+
+    private String renderHtml(StatementData statementData) throws Exception {
+        StringBuilder result = new StringBuilder(
+                String.format("<h1> 청구내역 (고객명: %s)\n </h1>", statementData.customer()));
+        result.append("<table> \n");
+        result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>");
+        for (EnrichedPerformance performance : statementData.performances()) {
+            result.append(String.format("   <tr><td> %s</td> <td> %d석 </td> <td> $%s석 </td></tr>\n",
+                    performance.play().name(), performance.audience(),
+                    formatUSD(performance.amount())));
+        }
+        result.append("</table>\n");
+
+        result.append(String.format("총액: $%s\n", formatUSD(statementData.totalAmount())));
+        result.append(String.format("적립 포인트: %d점", statementData.totalVolumeCredits()));
+        return result.toString();
+    }
 }
