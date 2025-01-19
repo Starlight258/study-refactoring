@@ -2,8 +2,12 @@ package study.refactoring.chapter1.statement;
 
 import java.util.List;
 import study.refactoring.chapter1.calculator.PerformanceCalculator;
-import study.refactoring.chapter1.play.Play;
+import study.refactoring.chapter1.play.dto.Play;
 import study.refactoring.chapter1.play.Plays;
+import study.refactoring.chapter1.statement.dto.EnrichedPerformance;
+import study.refactoring.chapter1.statement.dto.Invoice;
+import study.refactoring.chapter1.statement.dto.Performance;
+import study.refactoring.chapter1.statement.dto.StatementData;
 
 public class StatementDataFactory {
 

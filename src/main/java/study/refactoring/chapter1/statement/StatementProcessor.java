@@ -1,6 +1,9 @@
 package study.refactoring.chapter1.statement;
 
 import study.refactoring.chapter1.play.Plays;
+import study.refactoring.chapter1.statement.dto.EnrichedPerformance;
+import study.refactoring.chapter1.statement.dto.Invoice;
+import study.refactoring.chapter1.statement.dto.StatementData;
 
 public class StatementProcessor {
 

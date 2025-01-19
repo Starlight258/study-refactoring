@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import study.refactoring.chapter1.play.Play;
+import study.refactoring.chapter1.play.dto.Play;
 import study.refactoring.chapter1.play.Plays;
-import study.refactoring.chapter1.statement.Invoice;
+import study.refactoring.chapter1.statement.dto.Invoice;
 
 @SpringBootTest
 class JsonReaderTest {

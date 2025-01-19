@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.refactoring.chapter1.play.Plays;
+import study.refactoring.chapter1.statement.dto.Invoice;
 import study.refactoring.chapter1.support.JsonReader;
 
 @SpringBootTest

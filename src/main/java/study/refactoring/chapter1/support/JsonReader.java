@@ -8,7 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import study.refactoring.chapter1.play.Plays;
-import study.refactoring.chapter1.statement.Invoice;
+import study.refactoring.chapter1.statement.dto.Invoice;
 
 @Component
 public class JsonReader {

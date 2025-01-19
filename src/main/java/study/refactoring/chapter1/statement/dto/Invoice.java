@@ -1,4 +1,4 @@
-package study.refactoring.chapter1.statement;
+package study.refactoring.chapter1.statement.dto;
 
 import java.util.List;
 

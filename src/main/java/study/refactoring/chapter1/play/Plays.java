@@ -1,6 +1,7 @@
 package study.refactoring.chapter1.play;
 
 import java.util.Map;
+import study.refactoring.chapter1.play.dto.Play;
 
 public class Plays {
 

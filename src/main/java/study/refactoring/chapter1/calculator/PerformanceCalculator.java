@@ -1,7 +1,7 @@
 package study.refactoring.chapter1.calculator;
 
-import study.refactoring.chapter1.play.Play;
-import study.refactoring.chapter1.statement.Performance;
+import study.refactoring.chapter1.play.dto.Play;
+import study.refactoring.chapter1.statement.dto.Performance;
 
 public class PerformanceCalculator {
 
