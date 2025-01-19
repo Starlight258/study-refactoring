@@ -14,6 +14,18 @@ public class PerformanceCalculator {
         this.play = play;
     }
 
+    public static PerformanceCalculator of(final Performance performance, final Play play) {
+        switch (play.type()) {
+            case tragedy -> {
+                return new TragedyCalculator(performance, play);
+            }
+            case comedy -> {
+                return new ComedyCalculator(performance, play);
+            }
+            default -> throw new IllegalStateException("알 수 없는 장르: " + play.type());
+        }
+    }
+
     public double calculateAmount() {
         double result;
         switch (play.type()) {
