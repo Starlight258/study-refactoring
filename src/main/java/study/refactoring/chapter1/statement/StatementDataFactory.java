@@ -26,10 +26,10 @@ public class StatementDataFactory {
     }
 
     private EnrichedPerformance createFrom(final Performance performance) {
-        PerformanceCalculator calculator = new PerformanceCalculator(performance, playFor(performance));
+        PerformanceCalculator calculator = PerformanceCalculator.of(performance, playFor(performance));
         Play play = playFor(performance);
         double amount = calculator.calculateAmount();
-        int volumeCredits = calculator.calculateVolumeCredits(performance, play);
+        int volumeCredits = calculator.calculateVolumeCredits();
 
         return new EnrichedPerformance(performance.playID(), performance.audience(), play,
                 amount, volumeCredits);
