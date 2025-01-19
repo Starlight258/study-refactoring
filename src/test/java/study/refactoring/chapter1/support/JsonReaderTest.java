@@ -2,7 +2,7 @@ package study.refactoring.chapter1.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static study.refactoring.chapter1.play.PlayType.tragedy;
+import static study.refactoring.chapter1.play.PlayType.TRAGEDY;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,7 +42,7 @@ class JsonReaderTest {
         Play play = plays.get("hamlet");
         assertAll(
                 () -> assertThat(play.name()).isEqualTo("Hamlet"),
-                () -> assertThat(play.type()).isEqualTo(tragedy)
+                () -> assertThat(play.type()).isEqualTo(TRAGEDY)
         );
     }
 }

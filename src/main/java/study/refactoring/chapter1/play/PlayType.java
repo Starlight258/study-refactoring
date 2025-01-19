@@ -1,5 +1,13 @@
 package study.refactoring.chapter1.play;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum PlayType {
-    tragedy, comedy
+
+    TRAGEDY, COMEDY;
+
+    @JsonValue
+    public String toLowerCase() {
+        return name().toLowerCase();
+    }
 }

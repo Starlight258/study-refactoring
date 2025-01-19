@@ -15,10 +15,10 @@ public class PerformanceCalculator {
 
     public static PerformanceCalculator of(final Performance performance, final Play play) {
         switch (play.type()) {
-            case tragedy -> {
+            case TRAGEDY -> {
                 return new TragedyCalculator(performance, play);
             }
-            case comedy -> {
+            case COMEDY -> {
                 return new ComedyCalculator(performance, play);
             }
             default -> throw new IllegalStateException("알 수 없는 장르: " + play.type());
